@@ -10,30 +10,21 @@ export interface Card {
 
 
 
-
-
 export interface Player {
 
-    cards:Card[]
-
+    cards: Card[]
 }
-
 
 
 export class UnoDeck {
 
-
-
-    private static COLOR: string[] = ["red", "green", "blue", "yellow"];
+    private static COLOR: string[] = ["red", "yellow", "green", "blue"];
 
     private cards: Card[] = [];
 
-
-
     constructor() {
-
         //create the deck
-
+        //add 4 "0" cards
         for (let c = 0; c < UnoDeck.COLOR.length; c++) {
 
             this.cards.push({
@@ -48,8 +39,7 @@ export class UnoDeck {
 
         }
 
-
-
+        //add wild/wild+4 cards
         for (let i = 0; i < 4; i++) {
 
             this.cards.push({
@@ -118,13 +108,13 @@ export class UnoDeck {
 
         }
 
-        this.shuffle();
+        this.shuffle(this.cards.length);
 
     }
 
 
 
-    private shuffle(times: number = 5): void {
+    private shuffle(times: number): void {
 
         // Using Math.round() will give you a non-uniform distribution!
 
@@ -134,27 +124,16 @@ export class UnoDeck {
 
         }
 
-
-
+        //Change the place of cards[i] to a random card
         for (let i = 0; i < times; i++) {
 
-            for (let j = 0; j < this.cards.length; j++) {
+            var p1: number = getRandomCard(i, this.cards.length - 1);
 
+            var t: Card = this.cards[p1];
 
+            this.cards[p1] = this.cards[i];
 
-                var p1: number = getRandomCard(1, this.cards.length-1);
-
-                var p2: number = getRandomCard(1, this.cards.length-1);
-
-
-
-                var t: Card = this.cards[p1];
-
-                this.cards[p1] = this.cards[p2];
-
-                this.cards[p2] = t;
-
-            }
+            this.cards[i] = t;
 
         }
 
